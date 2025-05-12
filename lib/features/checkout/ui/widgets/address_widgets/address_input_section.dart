@@ -1,0 +1,131 @@
+import 'package:book_mart/core/helper/spacing.dart';
+import 'package:book_mart/core/widgets/app_text_button.dart';
+import 'package:book_mart/core/widgets/app_text_form_faild.dart';
+import 'package:book_mart/features/checkout/logic/checkout_cubit/checkout_cubit.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AddressInputSection extends StatefulWidget {
+  const AddressInputSection({super.key, required this.valueListenable});
+
+  final ValueListenable<AutovalidateMode> valueListenable;
+
+  @override
+  State<AddressInputSection> createState() => _AddressInputSectionState();
+}
+
+class _AddressInputSectionState extends State<AddressInputSection>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    var cubit = context.read<CheckoutCubit>();
+    super.build(context);
+    return ValueListenableBuilder<AutovalidateMode>(
+      valueListenable: widget.valueListenable,
+      builder: (context, value, child) {
+        return Form(
+          key: cubit.checkoutFormKey,
+          autovalidateMode: value,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 24),
+                      AppTextFormField(
+                        hintText: 'name',
+                        keyboardType: TextInputType.name,
+                        controller: cubit.nameController,
+                        validator: (p0) {
+                          if (p0 == null || p0.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
+                      ),
+                      verticalSpace(16),
+                      AppTextFormField(
+                        hintText: 'email',
+                        keyboardType: TextInputType.emailAddress,
+                        controller: cubit.emailController,
+                        validator: (p0) {
+                          if (p0 == null || p0.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          return null;
+                        },
+                      ),
+                      verticalSpace(16),
+                      AppTextFormField(
+                        hintText: 'address',
+                        keyboardType: TextInputType.name,
+                        controller: cubit.addressController,
+                        validator: (p0) {
+                          if (p0 == null || p0.isEmpty) {
+                            return 'Please enter your address';
+                          }
+                          return null;
+                        },
+                      ),
+                      verticalSpace(16),
+                      AppTextFormField(
+                        hintText: 'city',
+                        keyboardType: TextInputType.name,
+                        controller: cubit.cityController,
+                        validator: (p0) {
+                          if (p0 == null || p0.isEmpty) {
+                            return 'Please enter your city';
+                          }
+                          return null;
+                        },
+                      ),
+                      verticalSpace(16),
+                      AppTextFormField(
+                        hintText: 'phone',
+                        keyboardType: TextInputType.name,
+                        controller: cubit.phoneController,
+                        validator: (p0) {
+                          if (p0 == null || p0.isEmpty) {
+                            return 'Please enter your phone';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              AppTextButton(
+                buttonText: 'Next',
+                onPressed: () {
+                  _handleAddressSectionVaildation(context);
+                },
+              ),
+              verticalSpace(16),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _handleAddressSectionVaildation(BuildContext context) {
+    var cubit = context.read<CheckoutCubit>();
+    if (cubit.checkoutFormKey.currentState!.validate()) {
+      cubit.checkoutFormKey.currentState!.save();
+      cubit.pageController.animateToPage(
+        cubit.currentPageIndex + 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      cubit.autoValidateModeNotifier.value = AutovalidateMode.always;
+    }
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+}

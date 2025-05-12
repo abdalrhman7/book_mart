@@ -1,0 +1,23 @@
+
+class BookFilter {
+  final int? min;
+  final int? max;
+  final int? isBestSeller;
+
+  const BookFilter({
+    this.min,
+    this.max,
+    this.isBestSeller,
+  });
+
+  Map<String, dynamic> toQueryParams() {
+    final Map<String, dynamic> params = {};
+
+    if (min != null) params['min'] = min;
+    if (max != null) params['max'] = max;
+    if (isBestSeller != null) params['is_best_seller'] = isBestSeller;
+
+    return params;
+  }
+}
+

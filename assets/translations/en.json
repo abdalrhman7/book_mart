@@ -1,0 +1,81 @@
+{
+  "language": "English",
+  "registerScreenTitle": "Create an account to explore a wide collection of amazing books.",
+  "loginScreenTitle": "Welcome Back! Log in to continue your reading journey.",
+  "email": "Email",
+  "emailHint": "Enter your email",
+  "invalidEmailMessage": "Please enter a valid email",
+  "password": "Password",
+  "passwordHint": "Enter your password",
+  "invalidPasswordMessage": "Please enter a valid password",
+  "name": "Name",
+  "nameHint": "Enter your name",
+  "invalidNameMessage": "Please enter a valid name",
+  "confirmPassword": "Confirm Password",
+  "confirmPasswordHint": "Confirm your password",
+  "passwordsDoNotMatchError": "Passwords do not match",
+  "login": "Login",
+  "register": "Register",
+  "forgotPassword": "Forgot password?",
+  "don'tHaveAccount": "Don't have an account?",
+  "alreadyHaveAccount": "Already have an account? ",
+  "registerNow": "Register now",
+  "loginNow": "Login now",
+  "enterValidEmail": "Please enter a valid email",
+  "enterValidCode": "Please enter a valid code",
+  "sendCode": "Send code",
+  "codeSentSuccessfully": "Code sent successfully",
+  "resend_in": "Resend in {} s",
+  "resetPassword": "Reset Password",
+  "newPassword": "New Password",
+  "passwordResetSuccessfully": "Password Reset Successfully",
+
+
+  "onboardingTitle1": "Only Books Can Help You",
+  "onboardingTitle2": "Learn Smartly",
+  "onboardingSubtitle1": "Books can help you to increase your knowledge and become more successfully.",
+  "onboardingSubtitle2": "It’s 2025 and it’s time to learn every quickly and smartly. All books are storage in cloud and you can access all of them from your laptop or PC.",
+  "previous": "Previous",
+  "next": "Next",
+  "start": "Start",
+  "gotIt": "Got it",
+
+
+
+  "bestSeller": "Best Seller",
+  "newArrival": "New Arrival",
+  "allFeatured": "All Featured",
+  "search": "Search",
+  "searchHint": "Search for books...",
+  "sort": "Sort",
+  "filter": "Filter",
+
+  "profile": "Profile",
+  "settings": "Settings",
+  "logout": "Logout",
+  "updateYourEmail": "update your email",
+  "updateYourPhone": "update your phone",
+  "updateYourAddress": "update your address",
+  "updateYourCity": "update your city",
+  "editProfile": "Edit Profile",
+  "phone": "Phone",
+  "address": "Address",
+  "city": "City",
+
+
+  "home": "Home",
+  "cart": "Cart",
+  "favorite": "Favorite",
+  "books": "books",
+  "popularBooks": "Popular Books",
+  "clearFilter": "Clear Filter",
+  "filterByBestSeller": "Filter By Best Seller",
+  "minPrice": "Min Price",
+  "maxPrice": "Max Price",
+  "applyFilter": "Apply Filter"
+
+
+
+}
+
+

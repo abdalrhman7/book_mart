@@ -1,0 +1,101 @@
+
+
+// lib/features/checkout/data/payment_gateways/paymop_service.dart
+
+import 'package:book_mart/core/constants/api_keys.dart';
+import 'package:book_mart/core/payment/payment_service.dart';
+
+class PayMopService implements PaymentService {
+  final ApiService apiService = ApiService();
+
+  @override
+  Future<void> makePayment(PaymentInputModel input) async {
+    try {
+      final token = await _getAuthenticationToken();
+
+      final orderId = await _getOrderId(
+        authenticationToken: token,
+        amount: (input.amount * 100).toString(),
+        currency: input.currency,
+      );
+
+      final paymentKey = await _getPaymentKey(
+        authenticationToken: token,
+        orderId: orderId.toString(),
+        amount: (input.amount * 100).toString(),
+        currency: input.currency,
+        email: input.email,
+        phone: input.phone,
+      );
+
+      // ممكن هنا تعرض WebView أو تحوّل ل payment URL حسب نظامك
+      print('PayMop Payment Key: $paymentKey');
+
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> _getAuthenticationToken() async {
+    final response = await apiService.post(
+      url: "https://accept.paymob.com/api/auth/tokens",
+      body: {"api_key": ApiKeys.payMopApiKey},
+    );
+    return response.data["token"];
+  }
+
+  Future<int> _getOrderId({
+    required String authenticationToken,
+    required String amount,
+    required String currency,
+  }) async {
+    final response = await apiService.post(
+      url: "https://accept.paymob.com/api/ecommerce/orders",
+      body: {
+        "auth_token": authenticationToken,
+        "amount_cents": amount,
+        "currency": currency,
+        "delivery_needed": "false",
+        "items": [],
+      },
+    );
+    return response.data["id"];
+  }
+
+  Future<String> _getPaymentKey({
+    required String authenticationToken,
+    required String orderId,
+    required String amount,
+    required String currency,
+    required String email,
+    required String phone,
+  }) async {
+    final response = await apiService.post(
+      url: "https://accept.paymob.com/api/acceptance/payment_keys",
+      body: {
+        "expiration": 3600,
+        "auth_token": authenticationToken,
+        "order_id": orderId,
+        "integration_id": ApiKeys.payMopIntegrationId,
+        "amount_cents": amount,
+        "currency": currency,
+        "billing_data": {
+          "first_name": "Abdalrhman",
+          "last_name": "Amr",
+          "email": email,
+          "phone_number": phone,
+          "apartment": "NA",
+          "floor": "NA",
+          "street": "NA",
+          "building": "NA",
+          "shipping_method": "NA",
+          "postal_code": "NA",
+          "city": "NA",
+          "country": "NA",
+          "state": "NA"
+        },
+      },
+    );
+    return response.data["token"];
+  }
+}

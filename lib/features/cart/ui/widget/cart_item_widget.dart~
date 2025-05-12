@@ -1,0 +1,117 @@
+import 'package:book_mart/core/helper/spacing.dart';
+import 'package:book_mart/core/theming/colors.dart';
+import 'package:book_mart/core/theming/styels.dart';
+import 'package:book_mart/core/widgets/shimmer/shimmer_effect.dart';
+import 'package:book_mart/features/cart/widget/cart_item_counter.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
+class CartItemWidget extends StatelessWidget {
+  const CartItemWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CartItemImage(),
+            horizontalSpace(20),
+            const Expanded(child: CartItemDetails()),
+          ],
+        ),
+        verticalSpace(14),
+        const CartItemActions(),
+      ],
+    );
+  }
+}
+
+class CartItemImage extends StatelessWidget {
+  const CartItemImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: CachedNetworkImage(
+        imageUrl: 'https://i0.wp.com/apeejay.news/wp-content/uploads/2023/10/281023-10-most-read-books-Feature.jpg?fit=569%2C509&ssl=1',
+        fit: BoxFit.cover,
+        height: 120.h,
+        width: 100.w,
+        placeholder: (context, url) => ShimmerEffect(
+          width: double.infinity,
+          height: 120.h,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      ),
+    );
+  }
+}
+
+
+class CartItemDetails extends StatelessWidget {
+  const CartItemDetails({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Women’s Casual Dress',
+          style: TextStyles.font16BlackSemiBold,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        verticalSpace(8),
+        Text(
+          'Checked Single-Breasted Blazer',
+          style: TextStyles.font13BlackRegular,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        verticalSpace(8),
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                  text: 'EGP 500',
+                  style: TextStyles.font16BlackSemiBold),
+              const WidgetSpan(child: SizedBox(width: 6)),
+              TextSpan(
+                text: '150',
+                style: TextStyles.font14BlackMedium.copyWith(
+                  decoration: TextDecoration.lineThrough,
+                  color: ColorsManager.gray,
+                ),
+              ),
+            ],
+          ),
+        ),
+        verticalSpace(8),
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: 'Get it',
+                style: TextStyles.font14BlackSemiBold,
+              ),
+              const WidgetSpan(child: SizedBox(width: 6)),
+              TextSpan(
+                text: 'Tomorrow',
+                style: TextStyles.font14BlackSemiBold.copyWith(
+                  color: Colors.green.shade500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

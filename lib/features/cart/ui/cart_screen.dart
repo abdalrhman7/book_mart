@@ -1,0 +1,105 @@
+import 'package:book_mart/core/theming/styels.dart';
+import 'package:book_mart/features/cart/logic/cart_cubit.dart';
+import 'package:book_mart/features/cart/ui/widget/cart_body.dart';
+import 'package:book_mart/features/cart/ui/widget/cart_checkout_section.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Shopping Bag',
+          style: TextStyles.font16BlackSemiBold,
+        ),
+      ),
+      body: const CartBodyBlocBuilder(),
+      bottomNavigationBar: const CartCheckoutSectionBlocBuilder(),
+    );
+  }
+}
+
+class CartBodyBlocBuilder extends StatelessWidget {
+  const CartBodyBlocBuilder({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CartCubit, CartState>(
+      buildWhen: (previous, current) =>
+          current is GetCartSuccess ||
+          current is GetCartFailure ||
+          current is GetCartLoading ||
+          current is EmptyCart ||
+          current is RemoveItemFromCartSuccess ||
+          current is UpdateCartSuccess,
+      builder: (context, state) {
+        if (state is GetCartSuccess || state is RemoveItemFromCartSuccess) {
+          final cartData = (state is GetCartSuccess)
+              ? state.cartData
+              : (state as RemoveItemFromCartSuccess).cartData;
+
+          return CartBody(cartData: cartData);
+        } else if (state is UpdateCartSuccess) {
+          return CartBody(cartData: state.cartData);
+        } else if (state is EmptyCart) {
+          return Center(
+            child: Text(
+              'Cart is empty',
+              style: TextStyles.font16BlackSemiBold,
+            ),
+          );
+        } else if (state is GetCartFailure) {
+          return Text(state.apiErrorModel.getAllErrorsMessages());
+        } else if (state is GetCartLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+}
+
+class CartCheckoutSectionBlocBuilder extends StatelessWidget {
+  const CartCheckoutSectionBlocBuilder({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CartCubit, CartState>(
+      buildWhen: (previous, current) =>
+          current is GetCartSuccess ||
+          current is GetCartLoading ||
+          current is EmptyCart ||
+          current is RemoveItemFromCartSuccess ||
+          current is ApplyCouponSuccess ||
+          current is UpdateCartSuccess,
+      builder: (context, state) {
+        if (state is GetCartSuccess) {
+          return CartCheckoutSection(
+              totalPrice: state.cartData.cartTotalPriceAsString);
+        } else if (state is RemoveItemFromCartSuccess) {
+          return CartCheckoutSection(
+              totalPrice: state.cartData.cartTotalPriceAsString);
+        } else if (state is UpdateCartSuccess) {
+          return CartCheckoutSection(
+              totalPrice: state.cartData.cartTotalPriceAsString);
+        } else if (state is ApplyCouponSuccess) {
+          return CartCheckoutSection(totalPrice: state.totalPriceAfterDiscount);
+        } else if (state is EmptyCart) {
+          return const SizedBox.shrink();
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+}

@@ -1,0 +1,24 @@
+import 'package:book_mart/core/netwoking/api_constants.dart';
+import 'package:book_mart/features/cart/data/model/cart_model.dart';
+import 'package:book_mart/features/cart/data/model/update_cart_model.dart';
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+
+part 'cart_api_services.g.dart';
+
+@RestApi(baseUrl: ApiConstants.baseUrl)
+abstract class CartApiServices{
+  factory CartApiServices(Dio dio) = _CartApiServices;
+
+  @POST(ApiConstants.addToCart)
+  Future<CartModel> addToCart(@Body() Map<String, int> bookId);
+
+  @GET(ApiConstants.getCart)
+  Future<CartModel> getCart();
+
+  @POST(ApiConstants.removeItemFromCart)
+  Future<CartModel> removeItemFromCart(@Body() Map<String, int> bookId);
+
+  @POST(ApiConstants.updateCart)
+  Future<CartModel> updateCart(@Body() UpdateCartModel updateCartModel);
+}

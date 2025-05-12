@@ -1,0 +1,208 @@
+import 'dart:convert';
+
+import 'package:book_mart/core/constants/app_constants.dart';
+import 'package:book_mart/core/constants/payment_keys.dart';
+import 'package:book_mart/core/di/dependency_injection.dart';
+import 'package:book_mart/core/helper/shared_pref_helper.dart';
+import 'package:book_mart/core/netwoking/api_error_model.dart';
+import 'package:book_mart/core/netwoking/payment_api_services/paymob_api_services/paymob_api_service.dart';
+import 'package:book_mart/core/netwoking/payment_api_services/stripe_api_service/stripe_api_service.dart';
+import 'package:book_mart/core/payment/model/payment_input_model.dart';
+import 'package:book_mart/core/payment/model/stribe_payment_intent_input_model.dart';
+import 'package:book_mart/core/payment/payments_gateways/paymob/paymop_service.dart';
+import 'package:book_mart/core/payment/payments_gateways/stripe/stripe_service.dart';
+import 'package:book_mart/features/auth/data/models/login_model/user_data_response.dart';
+import 'package:book_mart/features/checkout/date/model/checkout_model.dart';
+import 'package:book_mart/features/checkout/date/repo/checkout_repo.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_payment_gateway/services/paypal_service.dart';
+import 'package:multi_payment_gateway/transaction.dart';
+
+import '../date/model/place_order_request_body.dart';
+
+part 'checkout_state.dart';
+
+class CheckoutCubit extends Cubit<CheckoutState> {
+  CheckoutCubit(this.checkoutRepo) : super(CheckoutInitial());
+  final CheckoutRepo checkoutRepo;
+
+  PageController pageController = PageController(initialPage: 0);
+  int currentPageIndex = 0;
+
+  String subTotal = '';
+  String priceBeforeDiscount = '';
+  bool? isCashPayment;
+  String selectedPaymentMethodTitle = '';
+  List<CheckoutCartItem> cartItems = [];
+
+  bool isDiscountApplied = false;
+
+  void setIsDiscountApplied(bool value) {
+    isDiscountApplied = value;
+  }
+
+  // Form controllers
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  final GlobalKey<FormState> checkoutFormKey = GlobalKey<FormState>();
+  final ValueNotifier<AutovalidateMode> autoValidateModeNotifier =
+      ValueNotifier(AutovalidateMode.disabled);
+
+  Future<void> loadUserDataToForm() async {
+    final json = await SharedPrefHelper.getString(SharedPrefKeys.userData);
+    final user = User.fromJson(jsonDecode(json));
+    emailController.text = user.email ?? '';
+    nameController.text = user.name ?? '';
+    addressController.text = user.address ?? '';
+    cityController.text = user.city ?? '';
+    phoneController.text = user.phone ?? '';
+  }
+
+  String getTotal() {
+    double subtotal = double.tryParse(subTotal) ?? 0;
+
+    final total = isCashPayment == true ? subtotal + 30 : subtotal;
+
+    if (total == total.toInt()) {
+      return total.toInt().toString();
+    }
+    return total.toStringAsFixed(2);
+  }
+
+  Future<void> getCartItems() async {
+    emit(GetCartItemsLoading());
+    final result = await checkoutRepo.getCartItems();
+    result.when(
+      success: (data) {
+        cartItems = data.cartItems;
+
+        double total = double.tryParse(data.total) ?? 0;
+
+        if (isDiscountApplied) {
+          priceBeforeDiscount = data.total;
+          total *= 0.9;
+        }
+
+        subTotal = total.toString();
+
+        emit(GetCartItemsSuccess());
+      },
+      failure: (error) {
+        emit(GetCartItemsFailure());
+      },
+    );
+  }
+
+  List<ProductItem> getProductItemsFromCart() {
+    return cartItems.map((item) {
+      final originalTotal = double.tryParse(item.total) ?? 0;
+
+      final effectiveTotal = isDiscountApplied
+          ? originalTotal * 0.9
+          : originalTotal;
+
+      final unitPrice = effectiveTotal / item.quantity;
+
+      return ProductItem(
+        name: item.name,
+        quantity: item.quantity,
+        price: unitPrice.toStringAsFixed(2),
+        currency: 'USD',
+      );
+    }).toList();
+  }
+
+  Transaction createTransactionFromCart() {
+    List<ProductItem> products = getProductItemsFromCart();
+
+    return Transaction(
+      description: 'Order from Book Mart',
+      items: products,
+      shipping: isCashPayment == true ? '30' : '0',
+      shippingDiscount: 0,
+    );
+  }
+
+  void selectPaymentMethod(String method) {
+    selectedPaymentMethodTitle = method;
+    emit(PaymentMethodSelected());
+  }
+
+  Future<void> payUsingPaymob() async {
+    emit(PreparePaymobPaymentLoading());
+
+    final input = PaymobPaymentInputModel(
+      amount: (double.parse(getTotal())).toInt(),
+      email: emailController.text,
+      firstName: nameController.text,
+      lastName: nameController.text,
+      phone: phoneController.text,
+    );
+
+    final payMopService =
+        PayMopService(await getIt.getAsync<PaymobApiService>());
+    final result = await payMopService.makePayment(input);
+
+    result.when(
+      success: (paymentKeyToken) =>
+          emit(PreparePaymobPaymentSuccess(paymentKeyToken)),
+      failure: (apiErrorModel) =>
+          emit(PreparePaymobPaymentFailure(apiErrorModel)),
+    );
+  }
+
+  Future<void> payUsingStripe() async {
+    emit(PrepareStripePaymentLoading());
+    StripePaymentIntentInputModel paymentIntentInputModel =
+        StripePaymentIntentInputModel(
+      amount: (double.parse(getTotal())),
+      currency: 'usd',
+      customerId: 'cus_OvTlnS3BNlO7eF',
+    );
+
+    final stripeService =
+        StripeService(await getIt.getAsync<StripeApiService>());
+    final result = await stripeService.makePayment(
+        paymentIntentInputModel: paymentIntentInputModel);
+
+    result.when(
+      success: (paymentKeyToken) => emit(StripePaymentSuccess()),
+      failure: (apiErrorModel) => emit(PrepareStripePaymentFailure()),
+    );
+  }
+
+  Future<void> payUsingPaypal(BuildContext context) async {
+    final paypalModel = SetupePaypalPayment(
+      context: context,
+      clientId: PaymentKeys.paypalClientId,
+      secretKey: PaymentKeys.paypalSecretKey,
+      // onSuccess: (params) async{
+      //  await placeOrder();
+      // },
+      transactions: [createTransactionFromCart()],
+    );
+    await PaypalService.instance.pay(setupPayment: paypalModel);
+  }
+
+  Future<void> placeOrder() async {
+    emit(PlaceOrderLoading());
+    PlaceOrderRequestBody placeOrderRequestBody = PlaceOrderRequestBody(
+      address: addressController.text,
+      email: emailController.text,
+      name: nameController.text,
+      phone: phoneController.text,
+      governorateId: '1',
+    );
+    var result = await checkoutRepo.placeOrder(placeOrderRequestBody);
+    result.when(success: (data) {
+      emit(PlaceOrderSuccess());
+    }, failure: (error) {
+      emit(PlaceOrderFailure());
+    });
+  }
+}

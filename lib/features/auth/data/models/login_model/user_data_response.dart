@@ -1,0 +1,47 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'user_data_response.g.dart';
+
+@JsonSerializable()
+class UserDataResponse {
+  Data? data ;
+  UserDataResponse({this.data});
+
+  factory UserDataResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserDataResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserDataResponseToJson(this);
+}
+
+@JsonSerializable()
+class Data {
+  String? token;
+  User? user;
+
+  Data({this.token, this.user});
+
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DataToJson(this);
+}
+
+@JsonSerializable()
+class User {
+  int? id;
+  String? name;
+  String? email;
+  String? address;
+  String? city;
+  String? phone;
+  String? image;
+
+  User({this.id, this.name, this.email,});
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  bool isUserDataComplete() {
+    return name != null  && address != null && city != null && phone != null;
+  }
+}
+

@@ -1,0 +1,75 @@
+import 'package:book_mart/core/helper/spacing.dart';
+import 'package:book_mart/core/widgets/app_text_button.dart';
+import 'package:book_mart/core/widgets/show_bar.dart';
+import 'package:book_mart/features/checkout/logic/checkout_cubit/checkout_cubit.dart';
+import 'package:book_mart/features/checkout/ui/widgets/shipping_widgets/shipping_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+
+class ShippingSection extends StatefulWidget {
+  const ShippingSection({super.key});
+
+  @override
+  State<ShippingSection> createState() => _ShippingSectionState();
+}
+
+class _ShippingSectionState extends State<ShippingSection> with AutomaticKeepAliveClientMixin {
+  int selectedIndex = -1  ;
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return   Column(
+      children: [
+        verticalSpace(20),
+        ShippingItem(
+          onTap:  () {
+            selectedIndex = 0;
+            context.read<CheckoutCubit>().isCashPayment = true;
+            setState(() {});
+          },
+          isSelected: selectedIndex == 0,
+          title: 'Cash on delivery',
+          subtitle: 'Cash on delivery',
+          price: '30 EGP',
+        ),
+        const SizedBox(height:16),
+        ShippingItem(
+          onTap:  () {
+            selectedIndex = 1;
+            context.read<CheckoutCubit>().isCashPayment = false;
+            setState(() {});
+          },
+          isSelected: selectedIndex == 1,
+          title: 'Pay online',
+          subtitle: 'Please select payment method',
+          price: 'free',
+        ),
+        const Spacer(),
+        AppTextButton(
+          buttonText: 'Next',
+          onPressed: () {
+            _handleShippingSectionVaildation(context);
+          },
+        )
+      ],
+    );
+  }
+
+  void _handleShippingSectionVaildation(BuildContext context) {
+    var cubit = context.read<CheckoutCubit>();
+    if (context.read<CheckoutCubit>().isCashPayment != null) {
+      cubit.pageController.animateToPage(
+        cubit.currentPageIndex + 1,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      showBar(context, 'please select payment method');
+    }
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+}
