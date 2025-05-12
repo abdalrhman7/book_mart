@@ -1,6 +1,6 @@
 # 📚 BookMart
 
-**BookMart** is a Flutter-based e-commerce app for buying and selling books. Users can browse, search, filter, and paginate through a catalog of books, add items to their cart, apply discounts, and complete checkout with multiple payment options. Deep links let users jump directly to product details, and push notifications keep users informed.
+**BookMart** is a Flutter-based e-commerce app for buying books. Users can browse, search, filter, and paginate through a catalog of books, add items to their cart, apply discounts, and complete checkout with multiple payment options. Deep links let users jump directly to product details, and push notifications keep users informed.
 
 ---
 
