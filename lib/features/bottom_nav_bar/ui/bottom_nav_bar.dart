@@ -28,7 +28,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
       const HomeScreen(),
       const BooksScreen(),
       const CartScreen(),
-      const SizedBox(),
       const ProfileScreen(),
     ];
   }
@@ -72,14 +71,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
             },
           ),
           title: context.tr(LocaleKeys.cart),
-        ),
-      ),
-      PersistentTabConfig(
-        screen: _buildScreens()[3],
-        item: ItemConfig(
-          activeForegroundColor: ColorsManager.mainBinkColor,
-          icon: const Icon(Icons.favorite_outline),
-          title: context.tr(LocaleKeys.favorite),
         ),
       ),
       PersistentTabConfig(
