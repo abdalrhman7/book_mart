@@ -78,18 +78,12 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path_ios: "assets/images/book_mart_icon.png"
-  image_path_android: "assets/images/book_mart_icon.png" # لازم تكتبها حتى لو بتستخدم adaptive icon
+  image_path_android: "assets/images/book_mart_icon.png"
   adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/images/book_mart_icon.png"
   remove_alpha_ios: true
 
-
-
-
-
-
 flutter:
-
 
   uses-material-design: true
 

@@ -74,7 +74,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
         ),
       ),
       PersistentTabConfig(
-        screen: _buildScreens()[4],
+        screen: _buildScreens()[3],
         item: ItemConfig(
           activeForegroundColor: ColorsManager.mainBinkColor,
           icon: const Icon(Icons.person_outline),
