@@ -30,6 +30,7 @@ class CartCubit extends Cubit<CartState> {
 
 
   Future<void> getCart() async {
+    clearCart();
     emit(GetCartLoading());
     final result = await cartRepo.getCart();
     result.when(success: (data) {
@@ -104,6 +105,12 @@ class CartCubit extends Cubit<CartState> {
   void updateCartItemCount(List<CartItem> items) {
     cartItemCount = 0;
     items.forEach((e) => cartItemCount += e.quantity);
+  }
+
+  void clearCart() {
+    cartItemCount = 0;
+    isDiscountApplied = false;
+    totalPrice = '';
   }
 
 }

@@ -70,7 +70,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
           total *= 0.9;
         }
 
-        subTotal = total.toString();
+        subTotal = total.toStringAsFixed(2);
 
         emit(GetCartItemsSuccess());
       },
