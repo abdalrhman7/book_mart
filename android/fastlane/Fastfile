@@ -1,0 +1,22 @@
+require 'dotenv'
+Dotenv.load(File.expand_path("../../../.env", __FILE__))
+
+platform :android do
+  desc "Lane for android firebase app distribution"
+  lane :firebase_distribution do
+    Dir.chdir("C:/Users/Noby/StudioProjects/book_mart") do
+      sh "flutter test"
+      sh "flutter clean"
+      sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
+    end
+
+    firebase_app_distribution(
+      app: ENV['FIREBASE_APP_ID'],
+      firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      testers: "abdalrhmanamr14@gmail.com",
+      release_notes: "first fastlane test"
+    )
+  end
+end
