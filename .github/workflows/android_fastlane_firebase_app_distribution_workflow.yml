@@ -30,6 +30,16 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Create .env file
+        run: |
+          echo "STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}" >> .env
+          echo "STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}" >> .env
+          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> .env
+          echo "PAYPAL_SECRET_KEY=${{ secrets.PAYPAL_SECRET_KEY }}" >> .env
+          echo "PAYMOP_API_KEY=${{ secrets.PAYMOP_API_KEY }}" >> .env
+          echo "PAYMOP_INTEGRATION_ID=${{ secrets.PAYMOP_INTEGRATION_ID }}" >> .env
+
+
       - name: Run Flutter Tests
         run: flutter test
 
