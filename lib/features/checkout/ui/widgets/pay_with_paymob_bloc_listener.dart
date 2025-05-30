@@ -3,10 +3,8 @@ import 'package:book_mart/core/helper/extensions.dart';
 import 'package:book_mart/core/routing/routes.dart';
 import 'package:book_mart/features/checkout/logic/payment_cubit/payment__cubit.dart';
 
-import 'package:book_mart/features/checkout/ui/stripe_payment_web_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 class PayWithPaymobBlocListener extends StatelessWidget {

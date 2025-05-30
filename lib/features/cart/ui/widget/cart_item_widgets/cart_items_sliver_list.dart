@@ -1,8 +1,6 @@
 import 'package:book_mart/core/helper/spacing.dart';
 import 'package:book_mart/features/cart/data/model/cart_model.dart';
-import 'package:book_mart/features/cart/logic/cart_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cart_item_widget.dart';
 

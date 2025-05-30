@@ -1,12 +1,8 @@
 import 'package:book_mart/core/constants/locale_keys.dart';
 import 'package:book_mart/core/helper/spacing.dart';
-import 'package:book_mart/core/theming/styels.dart';
-import 'package:book_mart/core/widgets/app_text_form_faild.dart';
 import 'package:book_mart/core/widgets/section_header.dart';
 import 'package:book_mart/features/home/ui/widgets/books_search_bar.dart';
-import 'package:book_mart/features/home/ui/widgets/search_widget.dart';
 import 'package:book_mart/features/home/ui/widgets/slider_section.dart';
-import 'package:book_mart/features/books_screen/ui/widgets/sort_and_filter_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

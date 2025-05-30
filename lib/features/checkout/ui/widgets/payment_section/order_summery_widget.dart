@@ -1,7 +1,6 @@
 import 'package:book_mart/core/helper/spacing.dart';
 import 'package:book_mart/core/theming/styels.dart';
 import 'package:book_mart/features/checkout/logic/checkout_cubit/checkout_cubit.dart';
-import 'package:book_mart/features/checkout/ui/widgets/payment_method_list_view.dart';
 import 'package:book_mart/features/checkout/ui/widgets/payment_section/payment_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

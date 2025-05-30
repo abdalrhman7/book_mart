@@ -1,5 +1,4 @@
 import 'package:book_mart/core/netwoking/api_constants.dart';
-import 'package:book_mart/features/home/data/models/categories_model.dart';
 import 'package:book_mart/features/home/data/models/product_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';

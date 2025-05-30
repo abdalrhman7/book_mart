@@ -2,7 +2,6 @@ import 'package:book_mart/core/constants/app_constants.dart';
 import 'package:book_mart/core/constants/payment_keys.dart';
 import 'package:book_mart/core/helper/shared_pref_helper.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 enum DioType {

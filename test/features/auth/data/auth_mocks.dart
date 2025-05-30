@@ -6,7 +6,6 @@ import 'package:mockito/mockito.dart';
 import 'package:book_mart/features/auth/data/repo/auth_repo.dart';
 import 'package:book_mart/features/auth/data/networking/auth_api_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 
 import 'auth_mocks.mocks.dart';
 

@@ -104,7 +104,9 @@ class CartCubit extends Cubit<CartState> {
 
   void updateCartItemCount(List<CartItem> items) {
     cartItemCount = 0;
-    items.forEach((e) => cartItemCount += e.quantity);
+    for (var e in items) {
+      cartItemCount += e.quantity;
+    }
   }
 
   void clearCart() {
