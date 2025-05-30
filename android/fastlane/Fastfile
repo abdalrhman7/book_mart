@@ -3,9 +3,11 @@ require 'dotenv'
 platform :android do
   desc "Lane for android firebase app distribution"
   lane :firebase_distribution do
-    sh "flutter test"
-    sh "flutter clean"
-    sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
+   Dir.chdir(File.expand_path("..", __dir__)) do
+      sh "flutter test"
+      sh "flutter clean"
+      sh "flutter build apk --release --target lib/main.dart --no-tree-shake-icons"
+    end
 
     firebase_app_distribution(
       app: "1:799349374823:android:5bbb4f89662c1cbc85f9c2",
@@ -17,4 +19,3 @@ platform :android do
     )
   end
 end
-
