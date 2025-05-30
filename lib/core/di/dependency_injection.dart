@@ -1,8 +1,8 @@
 import 'package:book_mart/core/netwoking/dio_factory.dart';
 import 'package:book_mart/core/netwoking/payment_api_services/paymob_api_services/paymob_api_service.dart';
 import 'package:book_mart/core/netwoking/payment_api_services/stripe_api_service/stripe_api_service.dart';
-import 'package:book_mart/features/Books_screen/data/networking/filtered_books_api_service.dart';
-import 'package:book_mart/features/Books_screen/data/repo/filtered_books_repo.dart';
+import 'package:book_mart/features/books_screen/data/networking/filtered_books_api_service.dart';
+import 'package:book_mart/features/books_screen/data/repo/filtered_books_repo.dart';
 import 'package:book_mart/features/auth/data/networking/auth_api_service.dart';
 import 'package:book_mart/features/auth/data/repo/auth_repo.dart';
 import 'package:book_mart/features/cart/data/networking/cart_api_services.dart';

@@ -1,6 +1,6 @@
 import 'package:book_mart/core/di/dependency_injection.dart';
 import 'package:book_mart/core/helper/spacing.dart';
-import 'package:book_mart/features/Books_screen/data/repo/filtered_books_repo.dart';
+import 'package:book_mart/features/books_screen/data/repo/filtered_books_repo.dart';
 import 'package:book_mart/features/books_screen/logic/books_cubit.dart';
 import 'package:book_mart/features/books_screen/ui/widgets/books_grid_view_bloc_builder.dart';
 import 'package:book_mart/features/books_screen/ui/widgets/load_more_books_indicator_bloc_builder.dart';
