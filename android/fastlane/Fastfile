@@ -1,5 +1,3 @@
-require 'dotenv'
-
 platform :android do
   desc "Lane for android firebase app distribution"
   lane :firebase_distribution do
