@@ -1,8 +1,6 @@
 import 'package:book_mart/core/helper/extensions.dart';
 import 'package:book_mart/core/helper/shared_pref_helper.dart';
-import 'package:book_mart/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -1,11 +1,6 @@
 import 'package:book_mart/core/helper/spacing.dart';
-import 'package:book_mart/core/netwoking/api_constants.dart';
 import 'package:book_mart/core/theming/styels.dart';
-import 'package:book_mart/core/widgets/app_text_button.dart';
-import 'package:book_mart/core/widgets/show_bar.dart';
 import 'package:book_mart/features/bottom_nav_bar/logic/bottom_nav_bar_cubit.dart';
-import 'package:book_mart/features/cart/logic/cart_cubit.dart';
-import 'package:book_mart/features/home/data/models/product_model.dart';
 import 'package:book_mart/features/product_details_screen/logic/product_details_cubit.dart';
 import 'package:book_mart/features/product_details_screen/ui/widgets/price_with_discount.dart';
 import 'package:book_mart/features/product_details_screen/ui/widgets/product_details_image.dart';
@@ -13,7 +8,6 @@ import 'package:book_mart/features/product_details_screen/ui/widgets/product_det
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:share_plus/share_plus.dart';
 import 'add_to_cart_bloc_builder_button.dart';
 import 'add_to_cart_bloc_listener.dart';

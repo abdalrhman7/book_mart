@@ -8,7 +8,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class PaymentWebViewScreen extends StatefulWidget {
   final String paymentUrl;
 
-  const PaymentWebViewScreen({required this.paymentUrl});
+  const PaymentWebViewScreen({super.key, required this.paymentUrl});
 
   @override
   _PaymentWebViewScreenState createState() => _PaymentWebViewScreenState();

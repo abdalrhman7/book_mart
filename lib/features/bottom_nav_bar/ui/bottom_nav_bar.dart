@@ -79,6 +79,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           activeForegroundColor: ColorsManager.mainBinkColor,
           icon: const Icon(Icons.person_outline),
           title: context.tr(LocaleKeys.profile),
+
         ),
       ),
     ];

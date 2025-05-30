@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:book_mart/core/netwoking/api_error_model.dart';
-import 'package:book_mart/features/Books_screen/data/repo/filtered_books_repo.dart';
+import 'package:book_mart/features/books_screen/data/repo/filtered_books_repo.dart';
 import 'package:book_mart/features/books_screen/data/model/book_filter.dart';
 import 'package:book_mart/features/home/data/models/product_model.dart';
 import 'package:meta/meta.dart';
