@@ -27,6 +27,12 @@ jobs:
         with:
           channel: stable
 
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Flutter Tests
+        run: flutter test --coverage
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
