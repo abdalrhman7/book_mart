@@ -31,7 +31,7 @@ jobs:
         run: flutter pub get
 
       - name: Run Flutter Tests
-        run: flutter test --coverage
+        run: flutter test
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
