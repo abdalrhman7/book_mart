@@ -6,6 +6,12 @@
 
 ## ✨ Features
 
+- **Testing**  
+  - Unit tests for core logic
+  - Widget tests for UI components
+- **CI/CD**  
+  - Automated builds and tests using GitHub Actions
+  - Deployment with Fastlane
 - **User Registration & Login**  
   - Email/password sign-up  
   - Forgot-password flow with OTP  
@@ -36,6 +42,8 @@
 
 ## 🛠️ Technologies & Packages
 
+- **Testing:** `flutter_test`, `bloc_test`, `mockito`
+- **CI/CD:** `GitHub Actions`, `Fastlane`
 - **State Management:** `flutter_bloc` (Cubit)  
 - **Architecture:** Clean Architecture  
 - **Dependency Injection:** `get_it`  
