@@ -48,6 +48,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 verticalSpace(16),
                 AppTextButton(
+                  key: const Key('login_button'),
                   buttonText: context.tr(LocaleKeys.login),
                   textStyle: TextStyles.font16WhiteMedium,
                   onPressed: () {
