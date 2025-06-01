@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:book_mart/book_mart.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -13,6 +16,7 @@ import 'core/routing/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   setupGetIt();
   Bloc.observer = CustomBlocObserver();
   await Firebase.initializeApp(
@@ -20,6 +24,11 @@ void main() async {
   );
   await initializeApp();
   Stripe.publishableKey = PaymentKeys.stripePublishableKey;
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   runApp(
     EasyLocalization(
