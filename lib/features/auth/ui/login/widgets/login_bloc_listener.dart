@@ -61,7 +61,7 @@ class LoginBlocListener extends StatelessWidget {
               context.pop();
             },
             child: Text(
-              context.tr(LocaleKeys.login),
+              'Close',
               style: TextStyles.font14BlackSemiBold,
             ),
           ),

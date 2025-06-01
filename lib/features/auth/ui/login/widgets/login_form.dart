@@ -1,3 +1,4 @@
+import 'package:book_mart/core/helper/app_regex.dart';
 import 'package:book_mart/core/helper/spacing.dart';
 import 'package:book_mart/core/theming/styels.dart';
 import 'package:book_mart/core/widgets/app_text_form_faild.dart';
@@ -34,13 +35,15 @@ class _LoginFormState extends State<LoginForm> {
           ),
           verticalSpace(10),
           AppTextFormField(
+            key: const Key('email_field'),
             hintText: context.tr(LocaleKeys.emailHint),
             validator: (value) {
-              // if (value == null ||
-              //     value.isEmpty ||
-              //     !AppRegex.isEmailValid(value)) {
-              //   return 'Please enter a valid email';
-              // }
+              if (value == null ||
+                  value.isEmpty ||
+                  !AppRegex.isEmailValid(value)) {
+                return 'Please enter a valid email';
+              }
+              return null;
             },
             prefixIcon: const Icon(Icons.email_outlined),
             controller: cubit.emailController,
@@ -52,6 +55,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           verticalSpace(10),
           AppTextFormField(
+            key: const Key('password_field'),
             hintText: context.tr(LocaleKeys.passwordHint),
             prefixIcon: const Icon(Icons.lock_outline),
             controller: cubit.passwordController,

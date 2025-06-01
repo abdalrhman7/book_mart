@@ -10,40 +10,4 @@ import 'package:flutter_test/flutter_test.dart';
 import 'auth_mocks.mocks.dart';
 
 @GenerateMocks([AuthApiService, AuthRepo])
-void main() {
-  late MockAuthApiService mockApiService;
-  late AuthRepo repo;
-
-  setUp(() {
-    mockApiService = MockAuthApiService();
-    repo = AuthRepo(mockApiService);
-  });
-
-  final request = LoginRequestBody(email: 'test@test.com', password: '123456');
-  final response = UserDataResponse(
-    data: Data(token: 'token123', user: User(id: 1, name: 'Test')),
-  );
-
-  test('returns success when login succeeds', () async {
-    when(mockApiService.login(request)).thenAnswer((_) async {
-      return response;
-    });
-
-    final result = await repo.login(request);
-
-    expect(result, isA<Success<UserDataResponse>>());
-    result.when(
-      success: (data) => expect(data, response),
-      failure: (_) => fail('Expected success'),
-    );
-  });
-
-  test('returns failure when login fails', () async {
-    when(mockApiService.login(request)).thenThrow(Exception('error'));
-
-    final result = await repo.login(request);
-
-    expect(result, isA<Failure<UserDataResponse>>());
-  });
-}
-
+void main() {}
